@@ -16,6 +16,8 @@ type ShopModelViewProps = {
   handleDiveShopBioChange:      (newValue: string) => void
   handleDiveShopImageSelection: (event: React.ChangeEvent<HTMLInputElement>) => void
   openTripCreatorList:          () => void
+  handleInsertTest:             () => void
+  handleSelectTest:             () => void
 
   diveShop:         DiveShop
   isPartnerAccount: boolean
@@ -78,6 +80,12 @@ export default function ShopModalView(props: ShopModelViewProps) {
                 </div>
               )
             : <h3>Offered Diving Trips</h3>}
+          <Button className="mt-2 btn-lg" onClick={props.handleInsertTest}>
+            Add test record
+          </Button>
+          <Button className="mt-2 btn-lg" onClick={props.handleSelectTest}>
+            Retrieve your records
+          </Button>
         </div>
         <ItineraryCardList itineraryList={props.itineraryList} canChangeItineraries={props?.isPartnerAccount && props.isMyShop} />
         <div className="panel-footer"></div>

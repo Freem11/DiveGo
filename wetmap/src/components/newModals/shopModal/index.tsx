@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { itineraries } from '../../../supabaseCalls/itinerarySupabaseCalls';
-import { updateDiveShop } from '../../../supabaseCalls/shopsSupabaseCalls';
+import { updateDiveShop, insertDocument, readAllTestRecords } from '../../../supabaseCalls/shopsSupabaseCalls';
 import { SelectedShopContext } from '../../contexts/selectedShopContext';
 import { UserProfileContext } from '../../contexts/userProfileContext';
 import { clearPreviousImage, handleImageUpload } from '../imageUploadHelpers';
@@ -54,6 +54,14 @@ export default function ShopModal(props: ShopModalProps) {
     }
   };
 
+  const handleInsertTest = async () => {
+    await insertDocument();
+  };
+
+  const handleSelectTest = async () => {
+    await readAllTestRecords();
+  }
+
   const handleImageSelection = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!selectedShop) {
       return;
@@ -89,6 +97,8 @@ export default function ShopModal(props: ShopModalProps) {
           headerPictureUrl={null}
           openTripCreatorList={openTripCreatorList}
           isMyShop={isMyShop}
+          handleInsertTest={handleInsertTest}
+          handleSelectTest={handleSelectTest}
           handleDiveShopImageSelection={handleImageSelection}
         />
       )}
