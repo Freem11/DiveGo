@@ -4,13 +4,14 @@ import { ItineraryItem } from '../../../entities/itineraryItem';
 import { ModalHandleProps } from '../../reusables/modal/types';
 import TripCreatorView from './view';
 import { DiveShopContext } from '../../contexts/diveShopContext';
+import { Form } from './form';
 
 type TripCreatorModalProps = Partial<ModalHandleProps>;
 
 export default function TripCreatorModal({ onModalCancel }: TripCreatorModalProps) {
   const { selectedShop } = useContext(DiveShopContext);
   const [itineraryList, setItineraryList] = useState<ItineraryItem[]>([]);
-  const [selectedID, setSelectedID] = useState<number>(0);
+  const [thePrice, setThePrice] = useState('');
 
   useEffect(() => {
     if (selectedShop) {
@@ -29,13 +30,33 @@ export default function TripCreatorModal({ onModalCancel }: TripCreatorModalProp
     }
   };
 
+  const onSubmit = (data: Form) => {
+    console.log(data, data.Start);
+  };
+
+  const priceChange = (data: any) => {
+    const num = data.target.value;
+
+    const regex1 = /^\d+(\.\d{1,2})?$/; // price without money symbol
+    const regex2 = /^\$\d+(\.\d{1,2})?$/; // price with money symbol
+
+    if (regex1.test(num.toString())) {
+      const result = '$' + num.toString();
+      setThePrice(result);
+    }
+
+    if (regex2.test(num.toString())) {
+      const num2 = num.replace(/[^0-9.]/g, '');
+      const result = '$' + num2.toString();
+      setThePrice(result);
+    }
+  };
+
   return (
     <>
       {selectedShop && (
         <TripCreatorView
-          setSelectedID={setSelectedID}
           itineraryList={itineraryList}
-          selectedID={selectedID}
           headerPictureUrl={null}
           onClose={onModalCancel}
         />

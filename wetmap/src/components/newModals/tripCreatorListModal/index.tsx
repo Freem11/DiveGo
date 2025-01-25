@@ -10,7 +10,7 @@ import { DiveShopContext } from '../../contexts/diveShopContext';
 
 
 export default function TripCreatorListModal() {
-  const { selectedShop, setSelectedShop } = useContext(DiveShopContext);
+  const { selectedShop } = useContext(DiveShopContext);
   const { profile } = useContext(UserProfileContext);
   const { modalShow, modalCancel } = useContext(ModalContext);
   const [itineraryList, setItineraryList] = useState<ItineraryItem[]>([]);
@@ -19,17 +19,13 @@ export default function TripCreatorListModal() {
     if (profile) {
       getShop(profile?.UserID);
     }
-
-    if (selectedShop) {
-      getItineraries(selectedShop.id);
-    }
-  }, [selectedShop]);
+  }, []);
 
   const getShop = async (id: string) => {
     try {
       const shop = await getShopByUserID(id);
       if (shop) {
-        setSelectedShop(shop[0]);
+        getItineraries(shop[0].id);
       }
     } catch (e) {
       console.log({ title: 'Error', message: (e as Error).message });

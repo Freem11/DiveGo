@@ -99,7 +99,6 @@ export default function ShopModal(props: ShopModalProps) {
     });
   };
 
-
   return (
     <>
       {selectedShop && (
